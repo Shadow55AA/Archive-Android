@@ -1,0 +1,36 @@
+package com.lotech.glplayground;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import android.content.Context;
+import android.opengl.GLSurfaceView;
+import android.view.MotionEvent;
+
+public class LtGLEngine extends GLSurfaceView implements GLSurfaceView.Renderer
+{
+	
+	public LtGLEngine(Context context)
+	{
+		super(context);
+	}
+
+	
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		
+	}
+	
+	public void onDrawFrame(GL10 gl)
+	{
+	}
+	
+	public void onSurfaceChanged(GL10 gl, int width, int height)
+	{
+	}
+	
+	public boolean onTouchEvent(MotionEvent e)
+	{
+		return super.onTouchEvent(e);
+	}
+}

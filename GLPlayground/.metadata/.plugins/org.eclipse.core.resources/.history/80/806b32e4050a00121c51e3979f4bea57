@@ -1,0 +1,19 @@
+package com.lotech.glplayground;
+
+public class Quaternion
+{
+	public float q[] = {0,0,0,1};
+	
+	public Quaternion(float x,float y,float z,float n)
+	{
+		q[0]=x;q[1]=y;q[2]=z;q[3]=n;
+	}
+	
+	public Quaternion mul(Quaternion iq)
+	{
+		return new Quaternion(q[3]*iq.q[0]+q[0]*iq.q[3]+q[1]*iq.q[2]-q[2]*iq.q[1],
+				q[3]*iq.q[1]+q[1]*iq.q[3]+q[2]*iq.q[0]-q[0]*iq.q[2],
+				q[3]*iq.q[2]+q[2]*iq.q[3]+q[0]*iq.q[1]-q[1]*iq.q[0],
+				q[3]*iq.q[3]-q[0]*iq.q[0]-q[1]*iq.q[1]-q[2]*iq.q[2]);
+	}
+}

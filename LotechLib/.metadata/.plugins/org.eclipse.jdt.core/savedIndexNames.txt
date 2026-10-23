@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+D:\programming\Android Projects\LotechLib\.metadata\.plugins\org.eclipse.jdt.core
+2381149591.index
+162094532.index

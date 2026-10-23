@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+D:\programming\Android Projects\SocketsClient\.metadata\.plugins\org.eclipse.jdt.core
+835749736.index
+3401813445.index
+3622741754.index
+1085715960.index

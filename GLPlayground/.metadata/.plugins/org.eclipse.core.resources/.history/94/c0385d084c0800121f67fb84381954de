@@ -1,0 +1,26 @@
+package com.lotech.glplayground;
+
+public class LtGLRenderer
+{
+	public LtGLRenderer(LtGLEngine ieng)
+	{
+		super();
+		engine = ieng;
+	}
+	
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		// TODO Auto-generated method stub
+		engine.onSurfaceCreated(gl,config);
+	}
+	
+	public void onDrawFrame(GL10 gl)
+	{
+		engine.onDrawFrame(gl);
+	}
+
+	public void onSurfaceChanged(GL10 gl, int width, int height)
+	{
+		engine.onSurfaceChanged(gl, width, height);
+	}
+}

@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+D:\programming\Android Projects\GLPlayground\.metadata\.plugins\org.eclipse.jdt.core
+3622741754.index
+2997119256.index
+835749736.index
+1948450481.index

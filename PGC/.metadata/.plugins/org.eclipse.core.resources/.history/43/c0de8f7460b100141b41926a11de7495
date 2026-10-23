@@ -1,0 +1,467 @@
+package com.atl.ltc;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.atl.equation.EqCalculator;
+import com.atl.equation.EqFunction;
+import com.atl.ltc.R;
+import com.atl.ltc.R.id;
+import com.atl.ltc.R.layout;
+import com.atl.ltc.R.menu;
+
+import android.opengl.GLSurfaceView;
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class ActivityMain extends Activity implements OnItemSelectedListener,Runnable,OnTouchListener
+{
+	private GLSView glview;
+	private EqCalculator calc;
+	private FuncListAdapter fofxadapter;
+	private FuncList2Adapter fofxyadapter;
+	private GraphedFuncs gfuncs;
+	private boolean brunning = false;
+	private boolean bdrawgraph = false;
+	private Thread animthread;
+	private long timetouchdown = 0;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        
+        calc = new EqCalculator();
+        gfuncs = new GraphedFuncs();
+        glview = new GLSView(this,calc,gfuncs);
+        glview.setOnTouchListener(this);
+        
+        setContentView(glview);
+        
+		LayoutInflater linflater = LayoutInflater.from(this);
+		View mview = linflater.inflate(R.layout.activity_main,null);
+		ViewGroup mlayout = (ViewGroup)mview.findViewById(R.id.mathlayout);
+		View pbtnview = linflater.inflate(R.layout.primarybtns,null);
+		((ViewGroup)mlayout).addView(pbtnview);
+		View fbtnview = linflater.inflate(R.layout.funcbtns,null);
+		((ViewGroup)mlayout).addView(fbtnview);
+		ViewGroup glayout = (ViewGroup)mview.findViewById(R.id.graphlayout);
+		View graphmenuview = linflater.inflate(R.layout.graphmenu,null);
+		((ViewGroup)glayout).addView(graphmenuview);
+		
+		Spinner spin = (Spinner)graphmenuview.findViewById(R.id.fofxspin);
+		fofxadapter = new FuncListAdapter(this,calc.getFunctionList(),gfuncs);
+		spin.setAdapter(fofxadapter);
+		
+		Spinner spin2 = (Spinner)graphmenuview.findViewById(R.id.fofxyspin);
+		fofxyadapter = new FuncList2Adapter(this,calc.getFunctionList());
+		spin2.setAdapter(fofxyadapter);
+		spin2.setOnItemSelectedListener(this);
+		
+        addContentView(mview, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        
+        animthread = new Thread(this);
+        brunning = true;
+        animthread.start();
+    }
+    
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	brunning = false;
+    	try
+    	{
+			animthread.join();
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+    
+    public void BtnRunOnClick(View view)
+    {
+    	EditText etcmd = (EditText)findViewById(R.id.etcmd);
+    	TextView tvres = (TextView)findViewById(R.id.tvres);
+    	
+    	String cmd = etcmd.getText().toString();
+    	
+    	calc.RunCommand(cmd);
+    	
+    	String error = calc.getError();
+    	if(error==null)
+    		tvres.setText(calc.getOutput());
+		else
+			tvres.setText(error);
+    	if(calc.GetLastCommandType()==EqCalculator.CmdTypeAsgnFunc)
+    	{
+    		EqFunction tfunc = calc.GetLastFunction();
+    		Log.i("pgc",""+tfunc);
+    		if(tfunc.GetNumVars()==1||tfunc.GetNumVars()==2)
+    		{
+    			gfuncs.clearFuncs();
+    			gfuncs.addFunction(tfunc);
+    		}
+    		fofxadapter.notifyDataSetChanged();
+    		fofxyadapter.notifyDataSetChanged();
+        	glview.generatePlot();
+    	}
+    }
+    
+    public void BtnClearOnClick(View view)
+    {
+    	EditText etcmd = (EditText)findViewById(R.id.etcmd);
+    	etcmd.setText("");
+    }
+    
+    public void BtnRetOnClick(View view)
+    {
+    	EditText etcmd = (EditText)findViewById(R.id.etcmd);
+    	CharSequence cs = etcmd.getText();
+    	if(cs.length()>0)
+    	{
+	    	etcmd.setText(cs.subSequence(0, cs.length()-1));
+	    	etcmd.setSelection(cs.length()-1);
+    	}
+    }
+    
+    public void BtnMathOnClick(View view)
+    {
+    	LinearLayout ll = (LinearLayout)findViewById(R.id.mathlayout);
+    	ll.setVisibility(View.VISIBLE);
+    	ll = (LinearLayout)findViewById(R.id.graphlayout);
+    	ll.setVisibility(View.INVISIBLE);
+    	bdrawgraph = false;
+    	glview.setDrawGraph(false);
+    	glview.requestRender();
+    }
+    
+    public void BtnGraphOnClick(View view)
+    {
+    	LinearLayout ll = (LinearLayout)findViewById(R.id.mathlayout);
+    	ll.setVisibility(View.INVISIBLE);
+    	ll = (LinearLayout)findViewById(R.id.graphlayout);
+    	ll.setVisibility(View.VISIBLE);
+    	
+    	if(bdrawgraph==true)
+    	{
+    		if(gfuncs.getGraphMode()==1)
+        	{
+    			PlotView pview = glview.getPlotView();
+    			View tview = findViewById(R.id.gitvar1f);
+    			float txmin = Float.valueOf(((EditText)tview).getText().toString());
+    			tview = findViewById(R.id.gitvar1t);
+    			float txmax = Float.valueOf(((EditText)tview).getText().toString());
+    			if(txmax<=txmin)
+    			{
+    				txmax = txmin+1f;
+    				((EditText)tview).setText(""+txmax);
+    			}
+    			pview.setDomainX(txmin, txmax);
+    			glview.generatePlot();
+    			float rangey[] = pview.getRangeY();
+        		tview = findViewById(R.id.gitvar2f);
+        		((EditText)tview).setText(""+rangey[0]);
+        		tview = findViewById(R.id.gitvar2t);
+        		((EditText)tview).setText(""+rangey[1]);
+        	}
+    		else if(gfuncs.getGraphMode()==2)
+    		{
+    			PlotView pview = glview.getPlotView();
+    			View tview = findViewById(R.id.gitvar1f);
+    			float txmin = Float.valueOf(((EditText)tview).getText().toString());
+    			tview = findViewById(R.id.gitvar1t);
+    			float txmax = Float.valueOf(((EditText)tview).getText().toString());
+    			if(txmax<=txmin)
+    			{
+    				txmax = txmin+1f;
+    				((EditText)tview).setText(""+txmax);
+    			}
+    			pview.setDomainX(txmin, txmax);
+    			tview = findViewById(R.id.gitvar2f);
+    			float tymin = Float.valueOf(((EditText)tview).getText().toString());
+    			tview = findViewById(R.id.gitvar2t);
+    			float tymax = Float.valueOf(((EditText)tview).getText().toString());
+    			if(tymax<=tymin)
+    			{
+    				tymax = tymin+1f;
+    				((EditText)tview).setText(""+tymax);
+    			}
+    			pview.setDomainY(tymin, tymax);
+    			glview.generatePlot();
+    			float rangey[] = pview.getRangeY();
+        		tview = findViewById(R.id.gitvar3f);
+        		((TextView)tview).setText(""+rangey[0]);
+        		tview = findViewById(R.id.gitvar3t);
+        		((TextView)tview).setText(""+rangey[1]);
+    		}
+    	}
+    	else
+    	{
+    		updateGraphIntervalTable();
+    	}
+    	
+    	bdrawgraph = true;
+    	glview.setDrawGraph(true);
+    	glview.requestRender();
+    }
+    
+    public void updateGraphIntervalTable()
+    {
+    	if(gfuncs.getGraphMode()==1)
+    	{
+    		PlotView pview = glview.getPlotView();
+    		View tview = findViewById(R.id.gitrow3);
+    		tview.setVisibility(View.INVISIBLE);
+    		float domainx[] = pview.getDomainX();
+    		tview = findViewById(R.id.gitvar1f);
+    		((EditText)tview).setText(""+domainx[0]);
+    		tview = findViewById(R.id.gitvar1t);
+    		((EditText)tview).setText(""+domainx[1]);
+    		float rangey[] = pview.getRangeY();
+    		tview = findViewById(R.id.gitvar2f);
+    		((EditText)tview).setText(""+rangey[0]);
+    		tview = findViewById(R.id.gitvar2t);
+    		((EditText)tview).setText(""+rangey[1]);
+    	}
+    	else if(gfuncs.getGraphMode()==2)
+    	{
+    		PlotView pview = glview.getPlotView();
+    		View tview = findViewById(R.id.gitrow3);
+    		tview.setVisibility(View.VISIBLE);
+    		float domainx[] = pview.getDomainX();
+    		tview = findViewById(R.id.gitvar1f);
+    		((EditText)tview).setText(""+domainx[0]);
+    		tview = findViewById(R.id.gitvar1t);
+    		((EditText)tview).setText(""+domainx[1]);
+    		float domainy[] = pview.getDomainY();
+    		tview = findViewById(R.id.gitvar2f);
+    		((EditText)tview).setText(""+domainy[0]);
+    		tview = findViewById(R.id.gitvar2t);
+    		((EditText)tview).setText(""+domainy[1]);
+    		float rangey[] = pview.getRangeY();
+    		tview = findViewById(R.id.gitvar3f);
+    		((TextView)tview).setText(""+rangey[0]);
+    		tview = findViewById(R.id.gitvar3t);
+    		((TextView)tview).setText(""+rangey[1]);
+    	}
+    }
+    
+    public void BtnInOnClick(View view)
+    {
+    	Button btn = (Button)(view);
+    	if(btn!=null)
+    	{
+    		CharSequence str = btn.getText();
+    		EditText etcmd = (EditText)findViewById(R.id.etcmd);
+    		etcmd.append(str);
+    	}
+    }
+    
+    public void funcListCBoxOnClick(View view)
+    {
+    	CheckBox tview = (CheckBox)view;
+    	CharSequence fname = tview.getText();
+    	EqFunction func = calc.GetFunction(fname);
+    	if(func!=null)
+    	{
+    		if(tview.isChecked())
+    		{
+    			int gfind = gfuncs.addFunction(func);
+    			if(gfind>=0)
+    			{
+    				int fcolor = gfuncs.getColor(gfind);
+    				tview.setTextColor(fcolor);
+    			}
+    			else
+    				tview.setChecked(false);
+    		}
+    		else
+    		{
+    			gfuncs.removeFunction(func);
+    			tview.setTextColor(Color.parseColor("#ff000000"));
+    		}
+    	}
+    	glview.generatePlot();
+    	updateGraphIntervalTable();
+    	glview.requestRender();
+    	//tview.setTextColor(getResources().getColor(R.color.col_red));
+    	
+    }
+    
+    public void scrollViewOnClick(View view)
+    {
+    	if(bdrawgraph==true&&gfuncs.getGraphMode()==2)
+    	{
+    		View tview = findViewById(R.id.mainscrollview);
+    		tview.setVisibility(View.INVISIBLE);
+    	}
+    }
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id)
+	{
+		EqFunction tfunc = (EqFunction)parent.getItemAtPosition(position);
+		if(tfunc!=null)
+		{
+			gfuncs.clearFuncs();
+			gfuncs.addFunction(tfunc);
+    		fofxadapter.notifyDataSetChanged();
+	    	glview.generatePlot();
+	    	updateGraphIntervalTable();
+	    	glview.requestRender();
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent)
+	{
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		glview.onResume();
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		glview.onPause();
+	}
+	
+	@Override
+	public void run()
+	{
+		while(brunning)
+		{
+			if(bdrawgraph&&gfuncs.getGraphMode()==2)
+			{
+				glview.animatePlot();
+				glview.requestRender();
+			}
+			try
+			{ Thread.sleep(50); }
+			catch( InterruptedException e)
+			{ }
+		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent me)
+	{
+		if(me.getActionMasked()==MotionEvent.ACTION_UP)
+		{
+			glview.onTouchUp(me.getX(), me.getY());
+			v.performClick();
+			long timeup = System.currentTimeMillis();
+			if(timeup-timetouchdown<100)
+			{
+	    		View tview = findViewById(R.id.mainscrollview);
+	    		tview.setVisibility(View.VISIBLE);
+			}
+		}
+		if(me.getActionMasked()==MotionEvent.ACTION_DOWN)
+		{
+			glview.onTouchDown(me.getX(), me.getY());
+			timetouchdown = System.currentTimeMillis();
+		}
+		if(me.getActionMasked()==MotionEvent.ACTION_MOVE)
+		{
+			glview.onTouchMove(me.getX(), me.getY());
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if(item.getItemId()==R.id.menu_help)
+		{
+			Intent intent = new Intent(this, ActivityHelp.class);
+			startActivity(intent);
+		}
+		return super.onOptionsItemSelected(item);
+	}
+    
+    class GLSView extends GLSurfaceView
+    {
+    	private GLRenderer renderer;
+		public GLSView(Context context,EqCalculator icalc,GraphedFuncs igfuncs)
+		{
+			super(context);
+			setEGLContextClientVersion(2);
+			renderer = new GLRenderer(context,icalc,igfuncs);
+			setRenderer(renderer);
+			setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		}
+    	
+		public void setDrawGraph(boolean ibgraph)
+		{
+			renderer.setDrawGraph(ibgraph);
+		}
+		
+		public PlotView getPlotView()
+		{
+			return renderer.getPlotView();
+		}
+		
+		public void generatePlot()
+		{
+			renderer.generatePlot();
+		}
+		
+		public void animatePlot()
+		{
+			renderer.animatePlot();
+		}
+		
+		public void onTouchDown(float ix,float iy)
+		{
+			renderer.onTouchDown(ix, iy);
+		}
+		
+		public void onTouchMove(float ix,float iy)
+		{
+			renderer.onTouchMove(ix, iy);
+		}
+		
+		public void onTouchUp(float ix,float iy)
+		{
+			renderer.onTouchUp(ix,iy);
+		}
+    }
+}

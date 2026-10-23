@@ -1,0 +1,9 @@
+package com.lotech.glplayground;
+
+public class LtGLGeoPlane extends LtGLGeometry
+{
+	public void Render()
+	{
+		
+	}
+}

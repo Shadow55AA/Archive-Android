@@ -1,0 +1,22 @@
+package com.lotech.graphics;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.view.SurfaceView;
+
+public class MySurfaceView extends SurfaceView
+{
+	Paint p;
+	public MySurfaceView(Context c)
+	{
+		super(c);
+		p = new Paint();
+	}
+	
+	public void onDraw(Canvas c)
+	{
+		p.setColor(0xffffffff);
+		c.drawLine(0, 0, 10, 10, p);
+	}
+}

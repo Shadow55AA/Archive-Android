@@ -1,0 +1,26 @@
+package com.lotech.glplayground;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+
+public class GLP extends Activity
+{
+	LtGLEngine engine;
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        engine = new LtGLEngine(this);
+        setContentView(R.layout.activity_glp);
+        View tview = (View)findViewById(R.layout.activity_glp);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_glp, menu);
+        return true;
+    }
+}

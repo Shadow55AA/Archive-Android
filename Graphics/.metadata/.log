@@ -1,0 +1,13 @@
+!SESSION 2013-01-28 01:55:33.202 -----------------------------------------------
+eclipse.buildId=I20120608-1400
+java.version=1.7.0_06
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2013-01-28 01:59:07.935
+!MESSAGE Failed to load properties file for project 'Graphics'
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2013-01-28 02:04:52.248
+!MESSAGE Failed to open search index.

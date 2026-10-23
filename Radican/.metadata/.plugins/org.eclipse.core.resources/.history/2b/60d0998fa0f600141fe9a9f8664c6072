@@ -1,0 +1,96 @@
+package com.losoft.ratican.render;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.ArrayList;
+
+public class RenderConstructor
+{
+	private FloatBuffer vertbuffer,normbuffer,uvbuffer;
+	private ShortBuffer indbuffer;
+	private boolean binds,bnorms,buvs;
+	
+	private int nverts,maxnverts = 1000;
+	private int ninds,maxninds = 1000;
+	private ArrayList<RenderElement> elements;
+	private int curelement,nelems,maxnelems = 20;
+
+	public RenderConstructor()
+	{
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		normbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*2*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		uvbuffer = bb.asFloatBuffer();
+		
+		ByteBuffer bb2 = ByteBuffer.allocateDirect(2*maxninds);
+		bb2.order(ByteOrder.nativeOrder());
+		indbuffer = bb2.asShortBuffer();
+		nverts = 0;
+		ninds = 0;
+		bnorms = false;
+		buvs = false;
+		binds = false;
+		
+		elements = new ArrayList<RenderElement>(maxnelems);
+		float color[] = {1,1,1,1};
+		RenderElement re = new RenderElement(color);
+		re.setStart(0);
+		elements.add(re);
+		curelement = 0;
+		nelems = 1;
+	}
+	
+	public void clear()
+	{
+		nverts = 0;
+		ninds = 0;
+		curelement=0;
+		nelems=1;
+	}
+	
+	public void startNewElement(float icolor[])
+	{
+		if(curelement+1>=maxnelems)
+			return;
+		curelement++;
+		RenderElement re;
+		if(elements.size()>curelement)
+		{
+			re = elements.get(curelement);
+			re.setColor(icolor);
+		}
+		else
+		{
+			re = new RenderElement(icolor);
+			elements.add(re);
+		}
+		re.start = vertbuffer.position()/3;
+		nelems++;
+	}
+	
+	public void setElementColor(float icolor[])
+	{
+		for(int i=0;i<4;i++)
+			elements.get(curelement).color[i]=icolor[i];
+	}
+	
+	public void addTriangle(float iverts[])
+	{
+		
+	}
+	
+	public RenderObject genRenderObject()
+	{
+		RenderObject robj = new RenderObject();
+		return robj;
+	}
+}

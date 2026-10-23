@@ -1,0 +1,26 @@
+uniform mat4 vproj;
+uniform vec4 vpos;
+uniform vec4 vrot;
+uniform vec4 dpos;
+uniform vec4 drot;
+attribute vec4 vertpos;
+vec4 qmul(vec4 q1,vec4 q2)
+{
+	return vec4(q1.w*q2.x+q1.x*q2.w+q1.y*q2.z-q1.z*q2.y,
+		q1.w*q2.y+q1.y*q2.w+q1.z*q2.x-q1.x*q2.z,
+		q1.w*q2.z+q1.z*q2.w+q1.x*q2.y-q1.y*q2.x,
+		q1.w*q2.w-q1.x*q2.x-q1.y*q2.y-q1.z*q2.z);
+};
+vec4 qconj(vec4 q)
+{
+	return vec4(-q.x,-q.y,-q.z,q.w);
+}
+vec4 qrot(vec4 q,vec4 v)
+{
+	return qmul(qmul(q,v),qconj(q));
+}
+void main() {
+	vec4 tpos = qrot(drot,vertpos)+dpos-vpos;
+	tpos = qrot(qconj(vrot),tpos);
+	gl_Position = vproj*tpos;
+};

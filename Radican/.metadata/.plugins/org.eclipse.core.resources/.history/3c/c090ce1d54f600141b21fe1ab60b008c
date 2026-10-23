@@ -1,0 +1,70 @@
+package com.losoft.ratican.render;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.ArrayList;
+
+public class RenderConstructor
+{
+	private FloatBuffer vertbuffer,normbuffer,uvbuffer;
+	private ShortBuffer indbuffer;
+	private boolean binds,bnorms,buvs;
+	
+	private int nverts,maxnverts = 1000;
+	private int ninds,maxninds = 1000;
+	private ArrayList<RenderElement> elements;
+
+	public RenderConstructor()
+	{
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		normbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*2*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		uvbuffer = bb.asFloatBuffer();
+		
+		ByteBuffer bb2 = ByteBuffer.allocateDirect(2*maxninds);
+		bb2.order(ByteOrder.nativeOrder());
+		indbuffer = bb2.asShortBuffer();
+		nverts = 0;
+		ninds = 0;
+		bnorms = false;
+		buvs = false;
+		binds = false;
+		
+		elements = new ArrayList<RenderElement>();
+		float color[] = {1,1,1,1};
+		RenderElement re = new RenderElement(color);
+		re.setStart(0);
+		elements.add(re);
+	}
+	
+	public void clear()
+	{
+		nverts = 0;
+		ninds = 0;
+	}
+	
+	public void startNewElement(float icolor[])
+	{
+		
+	}
+	
+	public void setElementColor(float icolor[])
+	{
+		
+	}
+	
+	public RenderObject genRenderObject()
+	{
+		RenderObject robj = new RenderObject();
+		return robj;
+	}
+}

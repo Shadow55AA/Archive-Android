@@ -1,0 +1,21 @@
+package com.lotech.glplayground;
+
+import android.content.Context;
+import android.opengl.GLSurfaceView;
+
+public class LtGLView extends GLSurfaceView
+{
+	LtGLEngine engine;
+	public LtGLView(Context context,LtGLEngine ieng)
+	{
+		super(context);
+		setEGLContextClientVersion(2);
+		engine = ieng;
+	}
+	
+	public boolean onTouchEvent(MotionEvent e)
+	{
+		return super.onTouchEvent(e);
+	}
+
+}

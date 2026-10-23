@@ -1,0 +1,49 @@
+package com.losoft.ratican.game.obj;
+
+import android.util.Log;
+
+import com.losoft.ratican.engine.GameRenderer;
+
+public class GOPBullet extends GameObject
+{
+	protected boolean bdead = false;
+	protected float vel[] = {0,0,0};
+	protected float damage=1;
+	
+	public GOPBullet()
+	{
+		vel[0]=4;
+		bsolid=true;
+		colbounds[0] = -0.125f;
+		colbounds[1] = -0.125f;
+		colbounds[2] = 0.125f;
+		colbounds[3] = 0.125f;
+	}
+	
+	@Override
+	public void step(float dt)
+	{
+		pos[0]+=vel[0]*dt;
+		pos[1]+=vel[1]*dt;
+		if(pos[0]>10f)
+			this.bdead = true;
+	}
+	
+	public boolean isDead()
+	{
+		return bdead;
+	}
+	
+	public void kill()
+	{
+		bdead = true;
+	}
+	
+	@Override
+	public void Render(GameRenderer irenderer)
+	{
+		float size[] = {.25f,.25f,.25f};
+		irenderer.setDrawPos(pos);
+		irenderer.drawRect(size);
+	}
+}

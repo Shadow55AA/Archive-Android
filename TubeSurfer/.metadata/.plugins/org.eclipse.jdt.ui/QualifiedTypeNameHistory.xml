@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.os.SystemClock"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="com.lotech.tubesurfer.RenderGeometry"/>
+<fullyQualifiedTypeName name="android.opengl.GLES20"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="java.nio.FloatBuffer"/>
+<fullyQualifiedTypeName name="java.nio.ShortBuffer"/>
+<fullyQualifiedTypeName name="java.nio.ByteOrder"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="android.hardware.Sensor"/>
+<fullyQualifiedTypeName name="android.hardware.SensorEvent"/>
+<fullyQualifiedTypeName name="android.hardware.SensorEventListener"/>
+<fullyQualifiedTypeName name="android.hardware.SensorManager"/>
+<fullyQualifiedTypeName name="com.lotech.tubesurfer.Quaternion"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="com.lotech.tubesurfer.Physics"/>
+</qualifiedTypeNameHistroy>

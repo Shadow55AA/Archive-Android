@@ -1,0 +1,48 @@
+package com.lotech.glplayground;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import android.content.Context;
+import android.opengl.GLES20;
+import android.view.MotionEvent;
+
+public class LtGLEngine
+{
+	LtGLRenderer glrenderer;
+	LtGLView glview;
+	LtGLPen pen;
+	LtGLGeoPlane plane;
+	
+	public LtGLEngine(Context context)
+	{
+		// Renderer must be before view
+		glrenderer = new LtGLRenderer(this);
+		glview = new LtGLView(context,this);
+		pen = new LtGLPen();
+		plane = new LtGLGeoPlane();
+	}
+	
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		GLES20.glClearColor(0,0,1,1f);
+		pen.onSurfaceCreated();
+	}
+	
+	public void onDrawFrame(GL10 gl)
+	{
+		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+		pen.DrawPlane();
+//		plane.Render(pen);
+	}
+	
+	public void onSurfaceChanged(GL10 gl, int width, int height)
+	{
+		GLES20.glViewport(0,0,width,height);
+	}
+	
+	public boolean onTouchEvent(MotionEvent e)
+	{
+		return true;
+	}
+}

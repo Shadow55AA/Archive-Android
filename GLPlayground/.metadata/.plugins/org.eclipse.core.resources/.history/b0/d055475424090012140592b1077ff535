@@ -1,0 +1,41 @@
+package com.lotech.glplayground;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
+public class LtGLPen
+{
+	FloatBuffer planevertbuff;
+	FloatBuffer planenormbuff;
+	
+	static float planeverts [] = 
+	{
+		-0.5f,-0.5f,0f,
+		0.5f,-0.5f,0f,
+		0.5f,0.5f,0f,
+		-0.5f,0.5f,0f
+	};
+	
+	static float planenorms [] =
+	{
+		0,0,1f,
+		0,0,1f,
+		0,0,1f,
+		0,0,1f
+	};
+	
+	LtGLPen()
+	{
+		ByteBuffer pvbb = ByteBuffer.allocateDirect(planeverts.length*4);
+		pvbb.order(ByteOrder.nativeOrder());
+		planevertbuff = pvbb.asFloatBuffer();
+		planevertbuff.put(planeverts);
+		planevertbuff.position(0);
+		ByteBuffer pnbb = ByteBuffer.allocateDirect(planenorms.length*4);
+		pnbb.order(ByteOrder.nativeOrder());
+		planenormbuff = pnbb.asFloatBuffer();
+		planenormbuff.put(planenorms);
+		planenormbuff.position(0);
+	}
+}

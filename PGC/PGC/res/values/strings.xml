@@ -1,0 +1,107 @@
+<resources>
+
+    <string name="app_name">Lotech Calculator</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_help">Help</string>
+    <string name="btn_run">&quot;-&gt;&quot;</string>
+    <string name="result">Result</string>
+    <color name="col_white">#ffffffff</color>
+    <color name="col_black">#ff000000</color>
+    <string name="pluss">&quot;+&quot;</string>
+    <string name="minus">&quot;-&quot;</string>
+    <string name="times">&quot;*&quot;</string>
+    <string name="divide">&quot;/&quot;</string>
+    <string name="power">&quot;^&quot;</string>
+    <string name="math">Math</string>
+    <string name="graph">Graph</string>
+    <string name="num0">&quot;0&quot;</string>
+    <string name="num1">&quot;1&quot;</string>
+    <string name="num2">&quot;2&quot;</string>
+    <string name="num3">&quot;3&quot;</string>
+    <string name="num4">&quot;4&quot;</string>
+    <string name="num5">&quot;5&quot;</string>
+    <string name="num6">&quot;6&quot;</string>
+    <string name="num7">&quot;7&quot;</string>
+    <string name="num8">&quot;8&quot;</string>
+    <string name="num9">&quot;9&quot;</string>
+    <string name="period">&quot;.&quot;</string>
+    <string name="parentho">&quot;(&quot;</string>
+    <string name="parenthc">&quot;)&quot;</string>
+    <string name="bracketl">&quot;[&quot;</string>
+    <string name="bracketr">&quot;]&quot;</string>
+    <string name="btnclear">&quot;C&quot;</string>
+    <string name="singlequote">\'</string>
+    <string name="btna">&quot;a&quot;</string>
+    <string name="btnb">&quot;b&quot;</string>
+    <string name="btnc">&quot;c&quot;</string>
+    <string name="btnd">&quot;d&quot;</string>
+    <string name="btne">&quot;e&quot;</string>
+    <string name="btnf">&quot;f&quot;</string>
+    <string name="btng">&quot;g&quot;</string>
+    <string name="btnh">&quot;h&quot;</string>
+    <string name="btni">&quot;i&quot;</string>
+    <string name="btnj">&quot;j&quot;</string>
+    <string name="btnk">&quot;k&quot;</string>
+    <string name="btnl">&quot;l&quot;</string>
+    <string name="btnm">&quot;m&quot;</string>
+    <string name="btnn">&quot;n&quot;</string>
+    <string name="btno">&quot;o&quot;</string>
+    <string name="btnp">&quot;p&quot;</string>
+    <string name="btnq">&quot;q&quot;</string>
+    <string name="btnr">&quot;r&quot;</string>
+    <string name="btns">&quot;s&quot;</string>
+    <string name="btnt">&quot;t&quot;</string>
+    <string name="btnu">&quot;u&quot;</string>
+    <string name="btnv">&quot;v&quot;</string>
+    <string name="btnw">&quot;w&quot;</string>
+    <string name="btnx">&quot;x&quot;</string>
+    <string name="btny">&quot;y&quot;</string>
+    <string name="btnz">&quot;z&quot;</string>
+    <string name="btnequal">&quot;=&quot;</string>
+    <string name="btncomma">&quot;,&quot;</string>
+    <string name="btnbackspace">&quot;&lt;-&quot;</string>
+    <string name="trigsin">sin</string>
+    <string name="trigcos">cos</string>
+    <string name="trigtan">tan</string>
+    <string name="strfrom">From</string>
+    <string name="strvar">Var</string>
+    <string name="strto">To</string>
+    <string name="graphsettings">Settings</string>
+    <string name="fofx">f(x)</string>
+    <color name="col_red">#ffff0000</color>
+    <color name="col_green">#ff00ff00</color>
+    <color name="col_blue">#ff0000ff</color>
+    <string name="resfuncln">ln</string>
+    <string name="resfuncabs">abs</string>
+    <string name="resvarpi">Pi</string>
+    <string name="resvarphi">Phi</string>
+    <string name="resvare">e</string>
+    <string name="trigasin">asin</string>
+    <string name="trigacos">acos</string>
+    <string name="trigatan">atan</string>
+    <string name="trighsin">hsin</string>
+    <string name="trighcos">hcos</string>
+    <string name="trightan">htan</string>
+    <string name="helplscroll">Feel free to scroll through and find the topic you need.</string>
+    <string name="helptopicbasics">Basics</string>
+    <string name="helpbasics">Add, subtract, and divide are +, -, and /, as most would suspect. Multiply is *, and ^ is for exponents. The trigonometric functions are included as well as natural logarithm and absolute value functions. Use parentheses to group operations and for the functions as you would normaly. To find a percentage, multiply by the decimal form. E.g. 21 percent is times 0.21.</string>
+    <string name="helptitlevar">Variables</string>
+    <string name="helpvars">You can assign variables by entering a name, the equals sign, and a number or expression. A variable name must start with a letter but can contain numbers. For example, a, b2, and cab13 are all valid varible names. Once assigned a value, variables can be used in expressions just as you would Pi, Phi, or e. An example of assigning and using a variable follows.</string>
+    <string name="helpvarsegln1">a=3+4</string>
+    <string name="helpvarsegln2">-&gt; a = 7.0</string>
+    <string name="helpvarsegln3">3*a</string>
+    <string name="helpvarsegln4">-&gt; 21.0</string>
+    <string name="helptopicfuncs">Functions</string>
+	<string name="helpfuncs">Functions can be assigned with a function name, open parentheses, variable names for the function separated by commas, close parentheses, an equals sign, and an expression with the functions variables. Function names follow the same rules as variable names, it must start with a letter, but can contain numbers. An assigned function can be evaluated by using the function name with parentheses and expressions for each of its variables separated by commas. Variables other than the ones for the function may also be used in the function, but must be assigned a value for the function to be evaluated. An example of the use of functions follows.</string>
+    <string name="helpfuncsegln1">f(x) = x^2</string>
+    <string name="helpfuncsegln2">-> f(x) = x^2</string>
+    <string name="helpfuncsegln3">f(3)</string>
+    <string name="helpfuncsegln4">-&gt; 9.0</string>
+    <string name="helpfuncsegln5">f(x,y) = x*y</string>
+    <string name="helpfuncsegln6">-> f(x,y) = x*y</string>
+    <string name="helpfuncsegln7">f(2+3,4)</string>
+    <string name="helpfuncsegln8">-> 20.0</string>
+    <string name="helptopicgraph">Graphing</string>
+    <string name="helpgraph">If a function of one or two variables has been assigned, it can be graphed. A drop down list of checkboxes allows for the graphing of up to five lines at once. And a standard dropdown list allows for the graphing of one plane. A table shows the range for each variable. The dependent variable range can be adjusted and updated by entering a new range and pressing the graph button. While viewing the plane graph, you can click the screen to hide everything but the graph and drag on the screen to rotate the graph. Click the screen to display everything again.</string>
+
+</resources>

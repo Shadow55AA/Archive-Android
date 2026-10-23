@@ -1,0 +1,6 @@
+package com.losoft.ratican.game.obj;
+
+public class GOPBullet extends GameObject
+{
+	protected boolean bdead = false;
+}

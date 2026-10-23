@@ -1,0 +1,115 @@
+package com.losoft.ratican.engine;
+
+import java.nio.FloatBuffer;
+import java.util.HashMap;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import com.losoft.ratican.render.Plane;
+import com.losoft.ratican.render.RenderConstructor;
+import com.losoft.ratican.render.RenderObject;
+
+import android.content.Context;
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+
+public class GameRenderer implements GLSurfaceView.Renderer
+{
+	private GameEngine gengine;
+	private GLShader glshader;
+	private Plane plane;
+	public RenderConstructor rconstructor;
+	HashMap<String,RenderObject> robjmap;
+	
+	public GameRenderer(Context icontext,GameEngine igengine)
+	{
+		super();
+		gengine = igengine;
+		robjmap = new HashMap<String,RenderObject>();
+	}
+
+	@Override
+	public void finalize()
+	{
+		plane.Destroy();
+		glshader.Destroy();
+	}
+	
+	@Override
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		glshader = new GLShader();
+		plane = new Plane();
+		rconstructor = new RenderConstructor();
+		createObjects();
+		gengine.onSurfaceCreated();
+	}
+	
+	private void createObjects()
+	{
+		rconstructor.setFlagStatic(true);
+		rconstructor.setFlagInds(true);
+		float tverts[] = {-0.5f,0.5f,0, -0.5f,-0.5f,0, 0.5f,0,0};
+		rconstructor.addTriangle(tverts);
+		RenderObject tro = rconstructor.genRenderObject();
+		robjmap.put("player", tro);
+	}
+
+	@Override
+	public void onSurfaceChanged(GL10 gl, int width, int height)
+	{
+		gengine.onSurfaceChanged(gl, width, height);
+	}
+	
+	@Override
+	public void onDrawFrame(GL10 gl)
+	{
+		glshader.UseShader();
+		gengine.onDrawFrame();
+	}
+	
+	public void setViewProjection(float ivproj[])
+	{
+		glshader.setViewProjection(ivproj);
+	}
+	
+	public void setViewPos(float ivpos[])
+	{
+		float tpos[] = {ivpos[0],ivpos[1],ivpos[2],0};
+		glshader.setViewPos(tpos);
+	}
+	
+	public void setDrawPos(float idpos[])
+	{
+		float tpos[] = {idpos[0],idpos[1],idpos[2],0};
+		glshader.setDrawPos(tpos);
+	}
+	
+	public void drawRect(float isize[])
+	{
+		plane.SetSize(isize);
+		plane.Draw(glshader.GetProgram());
+	}
+	
+	public void drawVerts(FloatBuffer ivertbuffer,int inverts)
+	{
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+		int spos = GLES20.glGetAttribLocation(glshader.GetProgram(), "vertpos");
+		GLES20.glEnableVertexAttribArray(spos);
+		GLES20.glVertexAttribPointer(spos,3,GLES20.GL_FLOAT,false,12,ivertbuffer);
+		
+
+		GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, inverts);
+		
+		GLES20.glDisableVertexAttribArray(spos);
+	}
+	
+	public void drawObject(String ikey)
+	{
+		RenderObject robj = robjmap.get(ikey);
+		if(robj!=null)
+			robj.render(glshader.GetProgram());
+	}
+}

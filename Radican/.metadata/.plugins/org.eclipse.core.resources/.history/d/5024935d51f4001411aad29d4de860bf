@@ -1,0 +1,21 @@
+package com.losoft.ratican.game.obj;
+
+import com.losoft.ratican.engine.GameEngine;
+
+public class GOEnemy extends GameObject
+{
+	protected float pos[] = {0,0,0};
+	protected float vel[] = {0,0,0};
+	protected GameEngine gengine;
+	
+	public GOEnemy(GameEngine igengine)
+	{
+		gengine = igengine;
+	}
+	
+	public void setPos(float ix,float iy)
+	{
+		pos[0] = ix;
+		pos[1] = iy;
+	}
+}

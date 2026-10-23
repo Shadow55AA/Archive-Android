@@ -1,0 +1,57 @@
+package com.losoft.ratican.game.obj;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
+import com.losoft.ratican.engine.GameEngine;
+import com.losoft.ratican.engine.GameRenderer;
+
+public class GOEFly extends GOEnemy
+{
+	private FloatBuffer vertbuffer;
+	private int nverts = 3;
+	private boolean bdead;
+	
+	public GOEFly(GameEngine igengine)
+	{
+		super(igengine);
+		vel[0]=-0.1f;
+		
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*nverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+	}
+	
+	@Override
+	public void genGL(GameRenderer irenderer)
+	{
+		float tverts[] = {0.5f,-0.5f,0,
+						  0.5f,0.5f,0,
+						  -0.5f,0,0};
+		for(int i=0;i<9;i++)
+		{
+			vertbuffer.put(tverts[i]);
+		}
+		vertbuffer.position(0);
+	}
+	
+	@Override
+	public void Render(GameRenderer irenderer)
+	{
+		irenderer.setDrawPos(pos);
+		irenderer.drawVerts(vertbuffer, nverts);
+	}
+	
+	@Override
+	public void step(float dt)
+	{
+		pos[0]+=vel[0]*dt;
+		pos[1]+=vel[1]*dt;
+		
+		if(pos[0]<-10f)
+		{
+			bdead=true;
+		}
+	}
+}

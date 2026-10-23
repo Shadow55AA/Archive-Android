@@ -1,0 +1,28 @@
+package com.lotech.glplayground;
+
+public class Quaternion
+{	
+	public static float[] Conj(float q[])
+	{
+		float tmp[] = {-q[0],-q[1],-q[2],q[3]};
+		return tmp;
+	}
+	
+	public static float[] Mul(float q[],float iq[])
+	{
+		float tmp[] = {q[3]*iq[0]+q[0]*iq[3]+q[1]*iq[2]-q[2]*iq[1],
+				q[3]*iq[1]+q[1]*iq[3]+q[2]*iq[0]-q[0]*iq[2],
+				q[3]*iq[2]+q[2]*iq[3]+q[0]*iq[1]-q[1]*iq[0],
+				q[3]*iq[3]-q[0]*iq[0]-q[1]*iq[1]-q[2]*iq[2]};
+		return tmp;
+	}
+	
+	public static float[] QRot(float axis[],float angle)
+	{
+	    float v[] = {(float) (axis[0]*Math.sin(angle/2)),
+	    		(float) (axis[0]*Math.sin(angle/2)),
+	    		(float) (axis[0]*Math.sin(angle/2)),
+	    		(float) Math.cos(angle/2)};
+	    return v;
+	}
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginRight="12dp"
+                android:text="@string/strvar"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_marginRight="12dp"
+                android:text="@string/strfrom"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_marginRight="24dp"
+                android:text="@string/strto"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/gitrow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/gitvar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/btnx"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/col_green" />
+
+            <EditText
+                android:id="@+id/gitvar1f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:inputType="numberSigned|numberDecimal" />
+
+            <EditText
+                android:id="@+id/gitvar1t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:inputType="numberSigned|numberDecimal" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/gitrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/gitvar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/btny"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/col_red" />
+
+            <EditText
+                android:id="@+id/gitvar2f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned|numberDecimal" />
+
+            <EditText
+                android:id="@+id/gitvar2t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned|numberDecimal" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/gitrow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/gitvar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/btnz"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/col_blue" />
+
+            <TextView
+                android:id="@+id/gitvar3f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:paddingRight="12dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/gitvar3t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </TableRow>
+    </TableLayout>
+
+    <Spinner
+        android:id="@+id/fofxspin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.atl.pgc.FofXYSpinner
+        android:id="@+id/fofxyspin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fofxspin"
+        android:padding="12dp" />
+
+</RelativeLayout>
+<!-- From: file:/D:/programming/Android%20Projects/PGC/PGC/res/layout/graphmenu.xml -->

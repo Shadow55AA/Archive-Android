@@ -1,0 +1,5 @@
+package com.losoft.ratican.game.obj;
+
+public class GOPBullet {
+
+}

@@ -1,0 +1,14 @@
+package com.lotech.glplayground;
+
+public class LtGLEngine
+{
+	public void onSurfaceCreated(GL10 gl, EGLConfig config)
+	{
+		
+	}
+	
+	public void onDrawFrame(GL10 gl)
+	{
+		
+	}
+}

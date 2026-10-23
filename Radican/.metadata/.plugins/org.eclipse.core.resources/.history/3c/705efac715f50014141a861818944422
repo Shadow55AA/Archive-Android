@@ -1,0 +1,39 @@
+package com.losoft.ratican.game.obj;
+
+import com.losoft.ratican.engine.GameRenderer;
+
+public class GameObject
+{
+	protected float pos[] = {0,0,0};
+	protected boolean bsolid = false;
+	protected float colbounds[] = {-1,-1,1,1};
+	
+	public void genGL(GameRenderer irenderer)
+	{
+		
+	}
+	
+	public void Render(GameRenderer irenderer)
+	{
+		
+	}
+	
+	public void step(float dt)
+	{
+		
+	}
+	
+	public boolean collidesWith(GameObject iobj)
+	{
+		if(!bsolid||!iobj.bsolid)
+			return false;
+		if(colbounds[0]+pos[0]>iobj.colbounds[2]+iobj.pos[0]&&
+			colbounds[1]+pos[1]>iobj.colbounds[3]+iobj.pos[1])
+			return false;
+		if(iobj.colbounds[0]+iobj.pos[0]>colbounds[2]+pos[0]&&
+			iobj.colbounds[1]+iobj.pos[1]>colbounds[3]+pos[1])
+			return false;
+		
+		return true;
+	}
+}

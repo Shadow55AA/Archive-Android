@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_black"
+    android:onClick="ViewOnClick" >
+
+    <TextView
+        android:id="@+id/mm_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/warning_close_app"
+        android:textSize="12dp"
+        android:textColor="@color/color_red"
+        tools:context=".SUDD" />
+
+    <TextView
+        android:id="@+id/mm_warn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mm_status"
+        android:layout_centerHorizontal="true"
+        android:text="@string/warning_unsaved_progress"
+        android:textColor="@color/color_red" />
+
+    <Button
+        android:id="@+id/mm_newgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:text="@string/mm_str_newgame"
+        android:onClick="MainMenuNewOnClick" />
+
+    <Button
+        android:id="@+id/mm_loadgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mm_newgame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/mm_str_loadsavedgame"
+        android:onClick="MainMenuLoadOnClick" />
+
+</RelativeLayout>

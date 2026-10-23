@@ -1,0 +1,18 @@
+package com.lotech.glplayground;
+
+import android.content.Context;
+import android.opengl.GLSurfaceView;
+
+public class LtGLView extends GLSurfaceView
+{
+	public LtGLView(Context context)
+	{
+		super(context);
+	}
+	
+	public boolean onTouchEvent(MotionEvent e)
+	{
+		return super.onTouchEvent(e);
+	}
+
+}

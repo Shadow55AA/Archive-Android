@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.view.Menu"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="android.view.WindowManager"/>
+<fullyQualifiedTypeName name="com.lotech.ratican.engine.GameEngine"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.opengl.GLSurfaceView"/>
+<fullyQualifiedTypeName name="java.nio.ShortBuffer"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="java.nio.ByteOrder"/>
+<fullyQualifiedTypeName name="android.opengl.GLES20"/>
+<fullyQualifiedTypeName name="com.lotech.ratican.render.Plane"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.graphics.Point"/>
+<fullyQualifiedTypeName name="android.graphics.Rect"/>
+<fullyQualifiedTypeName name="android.view.Window"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent.PointerCoords"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.gui.GuiContainer"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.gui.GuiButton"/>
+<fullyQualifiedTypeName name="android.content.res.Resources"/>
+<fullyQualifiedTypeName name="android.util.DisplayMetrics"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.gui.GuiAnalogStick"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.gui.GuiPanel"/>
+<fullyQualifiedTypeName name="java.nio.FloatBuffer"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.obj.GOEnemy"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.GameWorld"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.spawnpattern.SpawnPattern"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.spawnpattern.SPFlyAssault"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.engine.GameEngine"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.obj.GOPlayer"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.game.obj.GOPBullet"/>
+<fullyQualifiedTypeName name="javax.microedition.khronos.opengles.GL10"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.render.RenderObject"/>
+<fullyQualifiedTypeName name="com.losoft.ratican.engine.GameRenderer"/>
+</qualifiedTypeNameHistroy>

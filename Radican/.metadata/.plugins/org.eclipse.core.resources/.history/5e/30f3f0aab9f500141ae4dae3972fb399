@@ -1,0 +1,12 @@
+package com.losoft.ratican.game.obj;
+
+public class GOPBullet extends GameObject
+{
+	protected boolean bdead = false;
+	protected float vel[] = {0,0,0};
+	
+	public GOPBullet()
+	{
+		vel[0]=2;
+	}
+}

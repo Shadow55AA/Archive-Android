@@ -1,0 +1,132 @@
+package com.losoft.ratican.gui;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+
+import com.losoft.ratican.engine.GameEngine;
+import com.losoft.ratican.engine.GameRenderer;
+
+public class GuiAnalogStick extends Gui
+{
+	private float pos[] = {0,0,0}, size[] = {1,1,0};
+	
+	// render
+	private FloatBuffer vertbuffer;
+	private int nverts = 6*32;
+	private boolean btouchedlast = false;
+
+	public GuiAnalogStick(GameEngine igengine)
+	{
+		super(igengine);
+		DisplayMetrics dms = Resources.getSystem().getDisplayMetrics();
+		size[0] = dms.xdpi;
+		size[1] = dms.ydpi;
+		
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*nverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+		
+
+		float tverts[] = {-0.5f,-0.5f,0,
+						  0.5f,0,0,
+						  -0.5f,0.5f,0};
+		for(int i=0;i<32;i++)
+		{
+			float ri = size[1]*0.2f;
+			float ro = size[1]*0.5f;
+			float theta = i/32f*2*(float)Math.PI;
+			float theta2 = (i+1)/32f*2*(float)Math.PI;
+			vertbuffer.put((float)Math.cos(theta)*ri);
+			vertbuffer.put((float)Math.sin(theta)*ri);
+			vertbuffer.put(0);
+			vertbuffer.put((float)Math.cos(theta)*ro);
+			vertbuffer.put((float)Math.sin(theta)*ro);
+			vertbuffer.put(0);
+			vertbuffer.put((float)Math.cos(theta2)*ro);
+			vertbuffer.put((float)Math.sin(theta2)*ro);
+			vertbuffer.put(0);
+			
+			vertbuffer.put((float)Math.cos(theta)*ri);
+			vertbuffer.put((float)Math.sin(theta)*ri);
+			vertbuffer.put(0);
+			vertbuffer.put((float)Math.cos(theta2)*ro);
+			vertbuffer.put((float)Math.sin(theta2)*ro);
+			vertbuffer.put(0);
+			vertbuffer.put((float)Math.cos(theta2)*ri);
+			vertbuffer.put((float)Math.sin(theta2)*ri);
+			vertbuffer.put(0);
+		}
+		vertbuffer.position(0);
+	}
+
+	@Override
+	public void render(GameRenderer irenderer)
+	{
+		if(!bvisible)
+			return;
+		irenderer.setDrawPos(pos);
+		irenderer.drawVerts(vertbuffer, nverts);
+	}
+	
+	@Override
+	public void onSurfaceChanged(int iwidth,int iheight)
+	{
+		pos[0] = 10+size[0]/2;
+		pos[1] = 10+size[1]/2;
+	}
+	
+	@Override
+	public void onPointerUp(float px,float py)
+	{
+		if(btouchedlast)
+		{
+			gengine.onAnalogStickUp();
+			btouchedlast=false;
+		}
+	}
+	
+	@Override
+	public void onPointerMove(float pointerpos[], int npointers)
+	{
+		boolean btouched = false;
+		float hx = size[0]/2.0f;
+		float hy = size[1]/2.0f;
+		float dx=0,dy=0;
+		for(int i=0;i<npointers;i++)
+		{
+			if(pointerpos[i*2]>pos[0]-hx&&pointerpos[i*2]<=pos[0]+hx)
+			{
+				if(pointerpos[i*2+1]>pos[1]-hy&&pointerpos[i*2+1]<=pos[1]+hy)
+				{
+					btouched = true;
+					dx=(pointerpos[i*2]-pos[0])/hx;
+					dy=(pointerpos[i*2+1]-pos[1])/hy;
+					if(dx<0.1f&&dx>-0.1f)
+						dx=0;
+					if(dy<0.1f&&dy>-0.1f)
+						dy=0;
+				}
+			}
+		}
+		if(btouched)
+		{
+			if(!btouchedlast) // Started touching
+			{
+				gengine.onAnalogStickDown();
+			}
+			gengine.playerInput(dx, dy);
+		}
+		else
+		{
+			if(btouchedlast) // Stopped touching
+			{
+				gengine.onAnalogStickUp();
+			}
+		}
+		btouchedlast = btouched;
+	}
+}

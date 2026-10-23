@@ -1,0 +1,26 @@
+package com.losoft.ratican.game.obj;
+
+public class GOPBullet extends GameObject
+{
+	protected boolean bdead = false;
+	protected float vel[] = {0,0,0};
+	
+	public GOPBullet()
+	{
+		vel[0]=2;
+	}
+	
+	@Override
+	public void step(float dt)
+	{
+		pos[0]+=vel[0]*dt;
+		pos[1]+=vel[1]*dt;
+		if(pos[0]<-10f)
+			this.bdead = true;
+	}
+	
+	public boolean isDead()
+	{
+		return bdead;
+	}
+}

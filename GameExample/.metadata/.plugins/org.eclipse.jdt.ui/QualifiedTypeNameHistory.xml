@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.opengl.GLSurfaceView.Renderer"/>
+<fullyQualifiedTypeName name="android.opengl.GLSurfaceView"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.nio.FloatBuffer"/>
+<fullyQualifiedTypeName name="com.lotech.gameexample.GLPlane"/>
+<fullyQualifiedTypeName name="android.view.SurfaceHolder"/>
+<fullyQualifiedTypeName name="android.app.Application"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="com.lotech.gameexample.R.raw"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.nio.ShortBuffer"/>
+<fullyQualifiedTypeName name="android.graphics.drawable.Drawable"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="android.graphics.Canvas"/>
+<fullyQualifiedTypeName name="android.graphics.BitmapFactory"/>
+<fullyQualifiedTypeName name="android.graphics.BitmapFactory.Options"/>
+<fullyQualifiedTypeName name="android.opengl.GLES20"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="com.lotech.gameexample.R.drawable"/>
+<fullyQualifiedTypeName name="java.nio.ByteOrder"/>
+<fullyQualifiedTypeName name="android.opengl.GLUtils"/>
+<fullyQualifiedTypeName name="android.content.res.Resources"/>
+<fullyQualifiedTypeName name="android.opengl.GLES10"/>
+<fullyQualifiedTypeName name="android.util.AttributeSet"/>
+<fullyQualifiedTypeName name="com.lotech.gameexample.Quaternion"/>
+<fullyQualifiedTypeName name="android.opengl.Matrix"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,136 @@
+package com.lt.socketsclient;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class SocketsClient extends Activity
+{
+	EditText txtout;
+	TextView txtin;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sockets_client);
+        
+        txtout = (EditText)findViewById(R.id.outtext);
+        txtin = (TextView)findViewById(R.id.txtin);
+        
+        Button btnsend = (Button)findViewById(R.id.btnsend);
+        btnsend.setOnClickListener(BtnSendOnClickListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_sockets_client, menu);
+        return true;
+    }
+    
+    Button.OnClickListener BtnSendOnClickListener = new Button.OnClickListener(){
+    	
+    	public void onClick(View iview)
+    	{
+    		/*
+    		Socket socket = null;
+    		 DataOutputStream dataOutputStream = null;
+    		 DataInputStream dataInputStream = null;
+
+    		 try {
+    		  socket = new Socket("192.168.2.8", 52225);
+    		  dataOutputStream = new DataOutputStream(socket.getOutputStream());
+    		  dataInputStream = new DataInputStream(socket.getInputStream());
+    		  dataOutputStream.writeUTF(txtout.getText().toString());
+    		  txtin.setText(dataInputStream.readUTF());
+    		 } catch (UnknownHostException e) {
+    		  // TODO Auto-generated catch block
+    		  e.printStackTrace();
+    		 } catch (IOException e) {
+    		  // TODO Auto-generated catch block
+    		  e.printStackTrace();
+    		 }
+    		 finally{
+    		  if (socket != null){
+    		   try {
+    		    socket.close();
+    		   } catch (IOException e) {
+    		    // TODO Auto-generated catch block
+    		    e.printStackTrace();
+    		   }
+    		  }
+
+    		  if (dataOutputStream != null){
+    		   try {
+    		    dataOutputStream.close();
+    		   } catch (IOException e) {
+    		    // TODO Auto-generated catch block
+    		    e.printStackTrace();
+    		   }
+    		  }
+
+    		  if (dataInputStream != null){
+    		   try {
+    		    dataInputStream.close();
+    		   } catch (IOException e) {
+    		    // TODO Auto-generated catch block
+    		    e.printStackTrace();
+    		   }
+    		  }
+    		 }
+    		}*/
+    	
+    	
+	    	String hostip = "24.111.205.49";
+			int port = 52225;
+			
+//			StringBuffer instr = new StringBuffer();
+			String timestamp;
+			
+			try
+			{
+//				InetAddress address = InetAddress.getByName(hostip);
+				Socket connection = new Socket(hostip,port);
+				
+				BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
+				
+				OutputStreamWriter osw = new OutputStreamWriter(bos,"US-ASCII");
+				
+				timestamp = new java.util.Date().toString();
+				String process = "Calling the Socket Server on "+ hostip + ":" + port + " at " + timestamp + (char)13;
+				osw.write(process);
+				osw.flush();
+				
+/*				BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
+				
+				InputStreamReader isr = new InputStreamReader(bis,"US-ASCII");
+				
+				int c;
+				while((c= isr.read())!=13)
+					instr.append((char)c);*/
+				
+				connection.close();
+//				System.out.println(instr);
+			}
+			catch(IOException f)
+			{
+				System.out.println("IOException: " + f);
+			}
+			catch(Exception e)
+			{
+				System.out.println("Exception: " + e);
+			}
+    	};
+    };
+}

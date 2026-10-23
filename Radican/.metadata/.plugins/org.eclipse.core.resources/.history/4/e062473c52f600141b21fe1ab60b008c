@@ -1,0 +1,8 @@
+package com.losoft.ratican.render;
+
+public class RenderElement
+{
+	public int mode;
+	public int start,end;
+	public float color[] = {1,1,1,1};
+}

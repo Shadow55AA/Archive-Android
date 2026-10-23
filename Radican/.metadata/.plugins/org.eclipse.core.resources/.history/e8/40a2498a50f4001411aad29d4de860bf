@@ -1,0 +1,33 @@
+package com.losoft.ratican.game.spawnpattern;
+
+import java.util.Random;
+
+import com.losoft.ratican.engine.GameEngine;
+import com.losoft.ratican.game.obj.GOEFly;
+
+public class SPFlyAssault extends SpawnPattern
+{
+	private Random rand;
+	private float flyspawncounter;
+	
+	public SPFlyAssault(GameEngine igengine)
+	{
+		super(igengine);
+		rand = new Random();
+		maxtopspeed = 2;
+		spawnduration = 3;
+		flyspawncounter = 0f;
+	}	
+	@Override
+	public void spawnStep(float dt)
+	{
+		super.spawnStep(dt);
+		flyspawncounter+=dt;
+		if(flyspawncounter>=0.25f)
+		{
+			flyspawncounter-=0.25f;
+			GOEFly fly = new GOEFly(gengine);
+			gengine
+		}
+	}
+}

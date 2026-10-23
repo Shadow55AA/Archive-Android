@@ -1,0 +1,27 @@
+package com.losoft.ratican.game.obj;
+
+import com.losoft.ratican.engine.GameEngine;
+
+public class GOEnemy extends GameObject
+{
+	protected float vel[] = {0,0,0};
+	protected boolean bdead;
+	protected GameEngine gengine;
+	protected float hp = 10;
+	
+	public GOEnemy(GameEngine igengine)
+	{
+		gengine = igengine;
+		bdead = false;
+	}
+	
+	public boolean isDead()
+	{
+		return bdead;
+	}
+	
+	public void kill()
+	{
+		bdead = true;
+	}
+}

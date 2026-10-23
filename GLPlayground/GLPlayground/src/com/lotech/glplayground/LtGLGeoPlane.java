@@ -1,0 +1,17 @@
+package com.lotech.glplayground;
+
+public class LtGLGeoPlane extends LtGLGeometry
+{
+	float pos[] = {0,0,-2,0};
+	float quat[] = {0,0,0,1};
+	
+	public void onCreate()
+	{
+		
+	}
+	
+	public void Render(LtGLPen ipen)
+	{
+		ipen.DrawPlane(pos,quat);
+	}
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/programming/Android%20Projects/PGC/PGC/res/values/strings.xml -->
+    <eat-comment/>
+    <color name="col_black">#ff000000</color>
+    <color name="col_blue">#ff0000ff</color>
+    <color name="col_green">#ff00ff00</color>
+    <color name="col_red">#ffff0000</color>
+    <color name="col_white">#ffffffff</color>
+    <string name="app_name">PGC</string>
+    <string name="btn_run">"->"</string>
+    <string name="btna">"a"</string>
+    <string name="btnb">"b"</string>
+    <string name="btnbackspace">"&lt;-"</string>
+    <string name="btnc">"c"</string>
+    <string name="btnclear">"C"</string>
+    <string name="btncomma">","</string>
+    <string name="btnd">"d"</string>
+    <string name="btne">"e"</string>
+    <string name="btnequal">"="</string>
+    <string name="btnf">"f"</string>
+    <string name="btng">"g"</string>
+    <string name="btnh">"h"</string>
+    <string name="btni">"i"</string>
+    <string name="btnj">"j"</string>
+    <string name="btnk">"k"</string>
+    <string name="btnl">"l"</string>
+    <string name="btnm">"m"</string>
+    <string name="btnn">"n"</string>
+    <string name="btno">"o"</string>
+    <string name="btnp">"p"</string>
+    <string name="btnq">"q"</string>
+    <string name="btnr">"r"</string>
+    <string name="btns">"s"</string>
+    <string name="btnt">"t"</string>
+    <string name="btnu">"u"</string>
+    <string name="btnv">"v"</string>
+    <string name="btnw">"w"</string>
+    <string name="btnx">"x"</string>
+    <string name="btny">"y"</string>
+    <string name="btnz">"z"</string>
+    <string name="divide">"/"</string>
+    <string name="fofx">f(x)</string>
+    <string name="graph">Graph</string>
+    <string name="graphsettings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="helpbasics">Add, subtract, and divide are +, -, and /, as most would suspect. Multiply is *, and ^ is for exponents. The trigonometric functions are included as well as natural logarithm and absolute value functions. Use parentheses to group operations and for the functions as you would normaly. To find a percentage, multiply by the decimal form. E.g. 21 percent is times 0.21.</string>
+    <string name="helpfuncs">Functions can be assigned with a function name, open parentheses, variable names for the function separated by commas, close parentheses, an equals sign, and an expression with the functions variables. Function names follow the same rules as variable names, it must start with a letter, but can contain numbers. An assigned function can be evaluated by using the function name with parentheses and expressions for each of its variables separated by commas. Variables other than the ones for the function may also be used in the function, but must be assigned a value for the function to be evaluated. An example of the use of functions follows.</string>
+    <string name="helpfuncsegln1">f(x) = x^2</string>
+    <string name="helpfuncsegln2">-> f(x) = x^2</string>
+    <string name="helpfuncsegln3">f(3)</string>
+    <string name="helpfuncsegln4">-> 9.0</string>
+    <string name="helpfuncsegln5">f(x,y) = x*y</string>
+    <string name="helpfuncsegln6">-> f(x,y) = x*y</string>
+    <string name="helpfuncsegln7">f(2+3,4)</string>
+    <string name="helpfuncsegln8">-> 20.0</string>
+    <string name="helpgraph">If a function of one or two variables has been assigned, it can be graphed. A drop down list of checkboxes allows for the graphing of up to five lines at once. And a standard dropdown list allows for the graphing of one plane. A table shows the range for each variable. The dependent variable range can be adjusted and updated by entering a new range and pressing the graph button. While viewing the plane graph, you can click the screen to hide everything but the graph and drag on the screen to rotate the graph. Click the screen to display everything again.</string>
+    <string name="helplscroll">Feel free to scroll through and find the topic you need.</string>
+    <string name="helptitlevar">Variables</string>
+    <string name="helptopicbasics">Basics</string>
+    <string name="helptopicfuncs">Functions</string>
+    <string name="helptopicgraph">Graphing</string>
+    <string name="helpvars">You can assign variables by entering a name, the equals sign, and a number or expression. A variable name must start with a letter but can contain numbers. For example, a, b2, and cab13 are all valid varible names. Once assigned a value, variables can be used in expressions just as you would Pi, Phi, or e. An example of assigning and using a variable follows.</string>
+    <string name="helpvarsegln1">a=3+4</string>
+    <string name="helpvarsegln2">-> a = 7.0</string>
+    <string name="helpvarsegln3">3*a</string>
+    <string name="helpvarsegln4">-> 21.0</string>
+    <string name="math">Math</string>
+    <string name="menu_help">Help</string>
+    <string name="minus">"-"</string>
+    <string name="num0">"0"</string>
+    <string name="num1">"1"</string>
+    <string name="num2">"2"</string>
+    <string name="num3">"3"</string>
+    <string name="num4">"4"</string>
+    <string name="num5">"5"</string>
+    <string name="num6">"6"</string>
+    <string name="num7">"7"</string>
+    <string name="num8">"8"</string>
+    <string name="num9">"9"</string>
+    <string name="parenthc">")"</string>
+    <string name="parentho">"("</string>
+    <string name="period">"."</string>
+    <string name="pluss">"+"</string>
+    <string name="power">"^"</string>
+    <string name="resfuncabs">abs</string>
+    <string name="resfuncln">ln</string>
+    <string name="result">Result</string>
+    <string name="resvare">e</string>
+    <string name="resvarphi">Phi</string>
+    <string name="resvarpi">Pi</string>
+    <string name="strfrom">From</string>
+    <string name="strto">To</string>
+    <string name="strvar">Var</string>
+    <string name="times">"*"</string>
+    <string name="trigacos">acos</string>
+    <string name="trigasin">asin</string>
+    <string name="trigatan">atan</string>
+    <string name="trigcos">cos</string>
+    <string name="trighcos">hcos</string>
+    <string name="trighsin">hsin</string>
+    <string name="trightan">htan</string>
+    <string name="trigsin">sin</string>
+    <string name="trigtan">tan</string>
+    <!-- From: file:/D:/programming/Android%20Projects/PGC/PGC/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

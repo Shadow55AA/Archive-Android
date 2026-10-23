@@ -1,0 +1,185 @@
+package com.losoft.ratican.render;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.ArrayList;
+
+import android.opengl.GLES20;
+
+public class RenderConstructor
+{
+	private FloatBuffer vertbuffer,normbuffer,uvbuffer;
+	private ShortBuffer indbuffer;
+	private boolean binds,bnorms,buvs,bstatic;
+	
+	private int nverts,maxnverts = 1000;
+	private int ninds,maxninds = 1000;
+	private ArrayList<RenderElement> elements;
+	private int curelement,nelems,maxnelems = 20;
+
+	public RenderConstructor()
+	{
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*3*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		normbuffer = bb.asFloatBuffer();
+
+		bb = ByteBuffer.allocateDirect(4*2*maxnverts);
+		bb.order(ByteOrder.nativeOrder());
+		uvbuffer = bb.asFloatBuffer();
+		
+		ByteBuffer bb2 = ByteBuffer.allocateDirect(2*maxninds);
+		bb2.order(ByteOrder.nativeOrder());
+		indbuffer = bb2.asShortBuffer();
+		nverts = 0;
+		ninds = 0;
+		bnorms = false;
+		buvs = false;
+		binds = false;
+		bstatic = false;
+		
+		elements = new ArrayList<RenderElement>(maxnelems);
+		float color[] = {1,1,1,1};
+		RenderElement re = new RenderElement(color);
+		re.setStart(0);
+		elements.add(re);
+		curelement = 0;
+		nelems = 1;
+	}
+	
+	public void clear()
+	{
+		nverts = 0;
+		ninds = 0;
+		curelement=0;
+		nelems=1;
+	}
+	
+	public void startNewElement(float icolor[])
+	{
+		if(curelement+1>=maxnelems)
+			return;
+		curelement++;
+		RenderElement re;
+		if(elements.size()>curelement)
+		{
+			re = elements.get(curelement);
+			re.setColor(icolor);
+		}
+		else
+		{
+			re = new RenderElement(icolor);
+			elements.add(re);
+		}
+		re.start = vertbuffer.position()/3;
+		nelems++;
+	}
+	
+	public void setElementColor(float icolor[])
+	{
+		for(int i=0;i<4;i++)
+			elements.get(curelement).color[i]=icolor[i];
+	}
+	
+	public void setFlagStatic(boolean ibstatic)
+	{
+		bstatic = ibstatic;
+	}
+	
+	public void setFlagNorms(boolean ibnorms)
+	{
+		bnorms = ibnorms;
+	}
+	
+	public void setFlagUvs(boolean ibuvs)
+	{
+		buvs = ibuvs;
+	}
+	
+	public void setFlagInds(boolean ibinds)
+	{
+		binds = ibinds;
+	}
+	
+	public void addTriangle(float iverts[])
+	{
+		int tristart = vertbuffer.position()/3;
+		for(int j=0;j<3;j++)
+		{
+			for(int i=0;i<3;i++)
+			{
+				vertbuffer.put(iverts[i+j*3]);
+			}
+			if(bnorms)
+			{
+				if(bstatic)
+				{
+					vertbuffer.put(0);
+					vertbuffer.put(0);
+					vertbuffer.put(1);
+				}
+				else
+				{
+					normbuffer.put(0);
+					normbuffer.put(0);
+					normbuffer.put(1);
+				}
+			}
+		}
+		if(binds)
+		{
+			indbuffer.put((short)tristart);
+			indbuffer.put((short)(tristart+1));
+			indbuffer.put((short)(tristart+2));
+			ninds+=3;
+		}
+		nverts+=3;
+	}
+	
+	public void addQuad(float iverts[])
+	{
+		
+	}
+	
+	public RenderObject genRenderObject()
+	{
+		RenderObject robj = new RenderObject();
+		robj.setFlagInds(binds);
+		robj.setFlagStatic(bstatic);
+		robj.setFlagNorms(bnorms);
+		robj.setFlagUvs(buvs);
+		if(bstatic)
+		{
+			int vertlen = 3;
+			if(bnorms)
+				vertlen+=3;
+			if(buvs)
+				vertlen+=2;
+			int vbuff[] = {0};
+			int tpos = vertbuffer.position();
+			vertbuffer.position(0);
+			GLES20.glGenBuffers(1, vbuff,0);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbuff[0]);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, 4*nverts*vertlen, vertbuffer, GLES20.GL_STATIC_DRAW);
+			//GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, 0, 4*nverts*vertlen, vertbuffer);
+			vertbuffer.position(tpos);
+			robj.setVBuff(vbuff[0]);
+			robj.setNVerts(nverts);
+			if(binds)
+			{
+				int ibuff[] = {0};
+				GLES20.glGenBuffers(1, ibuff,0);
+				GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, ibuff[0]);
+				GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, 2*ninds, indbuffer, GLES20.GL_STATIC_DRAW);
+				robj.setIBuff(ibuff[0]);
+				robj.setNInds(ninds);
+			}
+		}
+		return robj;
+	}
+}

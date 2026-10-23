@@ -1,0 +1,46 @@
+package com.lotech.sudd;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
+import android.opengl.GLES20;
+
+public class LtTriangle
+{
+	private FloatBuffer vertbuff;
+	
+	static final int vertlength = 3;
+	
+	static float verts[] =
+	{
+		-0.5f,0.0f,0.0f,
+		0.5f,0.0f,0.0f,
+		0.0f,0.5f,0.0f
+	};
+	
+	float color[] = { 0.9f,0.0f,0.0f,1.0f};
+	
+	public LtTriangle()
+	{
+		ByteBuffer bb = ByteBuffer.allocateDirect(verts.length*4);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuff = bb.asFloatBuffer();
+		vertbuff.put(verts);
+		vertbuff.position(0);
+	}
+	
+	public void Draw(int iprogram)
+	{
+		int spos = GLES20.glGetAttribLocation(iprogram, "vPosition");
+		
+		GLES20.glEnableVertexAttribArray(spos);
+		GLES20.glVertexAttribPointer(spos,vertlength,GLES20.GL_FLOAT,false,12,vertbuff);
+		
+//		int scolor = GLES20.glGetUniformLocation(iprogram, "vColor");
+//		GLES20.glUniform4fv(scolor, 1, color,0);
+		
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3);
+		GLES20.glDisableVertexAttribArray(spos);
+	}
+}

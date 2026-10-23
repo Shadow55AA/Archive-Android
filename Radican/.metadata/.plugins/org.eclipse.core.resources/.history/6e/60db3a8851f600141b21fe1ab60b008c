@@ -1,0 +1,7 @@
+package com.losoft.ratican.render;
+
+public class RenderElement
+{
+	public int mode;
+	public int start,end;
+}

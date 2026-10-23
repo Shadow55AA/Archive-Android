@@ -1,0 +1,117 @@
+package com.losoft.ratican.game.obj;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import android.util.Log;
+
+import com.losoft.ratican.engine.GameRenderer;
+
+public class GOPlayer extends GameObject
+{
+	private float size[] = {1,1,1};
+	private float vel[] = {0,0};
+	private float inputvel[] = {0,0};
+	private ArrayList<GOPBullet> bullets;
+	private boolean bshooting = false;
+	private float reloadtimer = 0;
+	private float hp=10;
+	
+	// render
+	private FloatBuffer vertbuffer;
+	private int nverts = 3;
+	
+	public GOPlayer()
+	{
+		bullets = new ArrayList<GOPBullet>(100);
+		
+		ByteBuffer bb = ByteBuffer.allocateDirect(4*3*nverts);
+		bb.order(ByteOrder.nativeOrder());
+		vertbuffer = bb.asFloatBuffer();
+		bsolid=true;
+		colbounds[0]=-0.5f; colbounds[1]=-0.5f;
+		colbounds[2]=0.5f; colbounds[3]=0.5f;
+	}
+	
+	public void input(float idx,float idy)
+	{
+		inputvel[0]=idx*10;
+		inputvel[1]=idy*10;
+	}
+	
+	public void onAnalogStickDown()
+	{
+		bshooting = true;
+	}
+	
+	public void onAnalogStickUp()
+	{
+		bshooting = false;
+	}
+	
+	@Override
+	public void genGL(GameRenderer irenderer)
+	{
+		float tverts[] = {-0.5f,-0.5f,0,
+						  0.5f,0,0,
+						  -0.5f,0.5f,0};
+		for(int i=0;i<9;i++)
+		{
+			vertbuffer.put(tverts[i]);
+		}
+		vertbuffer.position(0);
+	}
+	
+	@Override
+	public void Render(GameRenderer irenderer)
+	{
+		irenderer.setDrawPos(pos);
+		irenderer.drawVerts(vertbuffer, nverts);
+
+		Iterator<GOPBullet> itt = bullets.iterator();
+		while(itt.hasNext())
+		{
+			GOPBullet curshot = itt.next();
+			curshot.Render(irenderer);
+		}
+	}
+	
+	@Override
+	public void step(float dt)
+	{
+		pos[0]+=vel[0]*dt+inputvel[0]*dt;
+		inputvel[0]*=0.8;
+		pos[1]+=vel[1]*dt+inputvel[1]*dt;
+		inputvel[1]*=0.8;
+		
+		Iterator<GOPBullet> itt = bullets.iterator();
+		while(itt.hasNext())
+		{
+			GOPBullet curshot = itt.next();
+			curshot.step(dt);
+			if(curshot.isDead())
+				itt.remove();
+		}
+		
+		if(bshooting)
+		{
+			if(reloadtimer<0)
+			{
+				GOPBullet shot = new GOPBullet();
+				shot.setPos(pos[0], pos[1], pos[2]);
+				bullets.add(shot);
+				reloadtimer+=0.5f;
+			}
+			reloadtimer-=dt;
+		}
+	}
+	
+	public ArrayList<GOPBullet> getBullets()
+	{
+		return bullets;
+	}
+
+}

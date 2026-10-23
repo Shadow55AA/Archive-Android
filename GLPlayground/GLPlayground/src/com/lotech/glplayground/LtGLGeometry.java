@@ -1,0 +1,7 @@
+package com.lotech.glplayground;
+
+public abstract class LtGLGeometry
+{
+	public abstract void onCreate();
+	public abstract void Render(LtGLPen ipen);
+}

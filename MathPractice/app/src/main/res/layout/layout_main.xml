@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" tools:ignore="MergeRootFrame"
+    android:orientation="vertical" >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/chose_type"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal|top" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mt_custom"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickCustom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mt_arithmetic"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickArith" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mt_algebra"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickAlg" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mt_derivative"
+        android:id="@+id/button4"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

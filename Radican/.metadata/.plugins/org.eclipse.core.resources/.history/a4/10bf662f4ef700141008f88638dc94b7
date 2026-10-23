@@ -1,0 +1,59 @@
+package com.losoft.ratican.render;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.ArrayList;
+
+public class RenderObject
+{
+	private FloatBuffer vertbuffer,normbuffer,uvbuffer;
+	private ShortBuffer indbuffer;
+	private ArrayList<RenderElement> elements;
+	
+	private int nverts = 0,ninds = 0;
+	private int glbuffs[] = {0,0};
+	private boolean binds = false,bnorms = false,buvs = false,bstatic = false;
+	
+	public RenderObject()
+	{
+		elements = new ArrayList<RenderElement>();
+	}
+	
+	public void setFlagStatic(boolean ibstatic)
+	{
+		bstatic = ibstatic;
+	}
+	
+	public void setFlagNorms(boolean ibnorms)
+	{
+		bnorms = ibnorms;
+	}
+	
+	public void setFlagUvs(boolean ibuvs)
+	{
+		buvs = ibuvs;
+	}
+	
+	public void setFlagInds(boolean ibinds)
+	{
+		binds = ibinds;
+	}
+	
+	public void setNVerts(int inverts)
+	{
+		nverts = inverts;
+	}
+	
+	public void setVBuff(int ivbuff)
+	{
+		glbuffs[0]=ivbuff;
+	}
+	
+	public void setIBuff(int iibuff)
+	{
+		glbuffs[1]=iibuff;
+	}
+
+}

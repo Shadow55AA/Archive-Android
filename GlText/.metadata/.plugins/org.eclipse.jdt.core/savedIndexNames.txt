@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+D:\programming\Android Projects\GlText\.metadata\.plugins\org.eclipse.jdt.core
+2373659584.index
+2862456994.index
+3799270281.index

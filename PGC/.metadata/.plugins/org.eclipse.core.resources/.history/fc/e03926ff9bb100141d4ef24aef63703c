@@ -1,0 +1,89 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainscrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ActivityMain" >
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ActivityMain" >
+
+    <LinearLayout
+        android:id="@+id/statuslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/etcmd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/Button01"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:onClick="BtnRunOnClick"
+                android:text="@string/btn_run" />
+
+            <TextView
+                android:id="@+id/tvres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/result"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/btnmath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="BtnMathOnClick"
+                android:text="@string/math" />
+
+            <Button
+                android:id="@+id/btngraph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="BtnGraphOnClick"
+                android:text="@string/graph" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mathlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statuslayout"
+        android:orientation="vertical"
+        android:scrollbars="vertical" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/graphlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statuslayout"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+
+    </LinearLayout>
+
+</RelativeLayout>
+</ScrollView>

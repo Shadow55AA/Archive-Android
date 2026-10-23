@@ -1,0 +1,38 @@
+package com.lt.socketsclient;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class SocketsClient extends Activity
+{
+	EditText txtout;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sockets_client);
+        
+        txtout = (EditText)findViewById(R.id.outtext);
+        
+        Button btnsend = (Button)findViewById(R.id.button1);
+        btnsend.setOnClickListener(BtnSendOnClickListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_sockets_client, menu);
+        return true;
+    }
+    
+    Button.OnClickListener BtnSendOnClickListener = new Button.OnClickListener(){
+    	
+    	public void onClick(View iview)
+    	{
+    		
+    	}
+    };
+}

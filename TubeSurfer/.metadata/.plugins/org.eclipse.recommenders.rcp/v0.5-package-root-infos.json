@@ -1,0 +1,41 @@
+[
+  {
+    "symbolicName": "android-support-v4",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "48c94ae70fa65718b382098237806a5909bb096e",
+    "jarFileModificationDate": "2013-02-10T18:19:38.020-06:00",
+    "location": "D:\\programming\\Android Projects\\TubeSurfer\\TubeSurfer\\libs\\android-support-v4.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "annotations",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "2603b9c344ea4ef860d6efbda64c7c0559908437",
+    "jarFileModificationDate": "2013-02-04T12:14:51.318-06:00",
+    "location": "D:\\programming\\Android\\android-sdk\\tools\\support\\annotations.jar",
+    "javaRuntime": false
+  },
+  {
+    "symbolicName": "android",
+    "version": {
+      "major": -1,
+      "minor": -1,
+      "micro": -1,
+      "qualifier": ""
+    },
+    "jarFileFingerprint": "b50d42b32e1d8a6c2d5f19a846474d5e2199c68e",
+    "jarFileModificationDate": "2012-08-17T22:53:26.385-05:00",
+    "location": "D:\\programming\\Android\\android-sdk\\platforms\\android-10\\android.jar",
+    "javaRuntime": false
+  }
+]

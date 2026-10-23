@@ -1,0 +1,6 @@
+package com.lotech.glplayground;
+
+public abstract class LtGLGeometry
+{
+	public abstract void Render();
+}

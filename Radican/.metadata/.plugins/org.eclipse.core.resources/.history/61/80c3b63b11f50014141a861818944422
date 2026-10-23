@@ -1,0 +1,301 @@
+package com.losoft.ratican.engine;
+
+import javax.microedition.khronos.opengles.GL10;
+
+import com.losoft.ratican.game.GameWorld;
+import com.losoft.ratican.game.obj.GOEnemy;
+import com.losoft.ratican.game.obj.GOPlayer;
+import com.losoft.ratican.gui.GuiAnalogStick;
+import com.losoft.ratican.gui.GuiButton;
+import com.losoft.ratican.gui.GuiContainer;
+import com.losoft.ratican.gui.GuiPanel;
+
+import android.content.Context;
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.MotionEvent.PointerCoords;
+import android.view.View;
+import android.view.View.OnTouchListener;
+
+public class GameEngine extends Thread implements OnTouchListener
+{
+	public GameSurfaceView glsview;
+	public GameRenderer glrenderer = null;
+	private boolean brunning;
+	private float[] viewproj = {1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1};
+	private float[] viewoproj = {1,0,0,0,
+			0,1,0,0,
+			0,0,1,0,
+			0,0,0,1};
+	
+	private int npointers = 0;
+	private float pointerpos[] = {0,0,0,0,0,0,0,0};
+	
+	private int screenwidth,screenheight;
+	
+	private GuiContainer guiroot;
+	private GuiPanel mainmenu;
+	private GuiAnalogStick analogstick;
+	private GameWorld world;
+	private GOPlayer player;
+	private int gamestate;
+	
+	public GameEngine(Context icontext)
+	{
+		glrenderer = new GameRenderer(icontext,this);
+		glsview = new GameSurfaceView(icontext,this);
+		glsview.setRenderer(glrenderer);
+		glsview.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		glsview.setOnTouchListener(this);
+		brunning = false;
+		gamestate=0;
+		init();
+	}
+
+	protected void init()
+	{
+		initGui();
+		player = new GOPlayer();
+		world = new GameWorld(this);
+	}
+	
+	private void initGui()
+	{
+		guiroot = new GuiContainer(this);
+		mainmenu = new GuiPanel(this);
+		float posrel[] = {0.5f,0.5f};
+		float size[] = {200,200};
+		GuiButton btn = new GuiButton(this,posrel,size);
+		mainmenu.AddGui(btn);
+		guiroot.AddGui(mainmenu);
+		analogstick = new GuiAnalogStick(this);
+		analogstick.setVisible(false);
+		guiroot.AddGui(analogstick);
+	}
+	
+	public void onSurfaceCreated()
+	{
+		GLES20.glClearColor(0,0,0,1.0f);
+		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+		GLES20.glDepthFunc(GLES20.GL_LEQUAL);
+		GLES20.glEnable(GLES20.GL_CULL_FACE);
+		brunning = true;
+		genGL();
+		gamestate=1;
+		this.start();
+	}
+	
+	protected void genGL()
+	{
+		player.genGL(glrenderer);
+	}
+	
+	public void onSurfaceChanged(GL10 gl, int width, int height)
+	{
+		screenwidth=width;
+		screenheight=height;
+		GLES20.glViewport(0,0,width,height);
+		buildPerspectiveProjection(viewproj, 50, (float)width/(float)height, 0.1f, 1000);
+		buildOrthographicProjection(viewoproj, -width/2.0f, width/2.0f, height/2.0f, -height/2.0f, -1, 1);
+		guiroot.onSurfaceChanged(width, height);
+	}
+	
+	public void onResume()
+	{
+		glsview.onResume();
+	}
+	
+	public void onPaused()
+	{
+		glsview.onPause();
+	}
+	
+	public void onBackPressed()
+	{
+		int ntries = 0;
+		while(ntries<3)
+		{
+			setRunning(false);
+			try
+			{
+				this.join();
+				ntries=3;
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			ntries++;
+		}
+	}
+	
+	public void playerInput(float dx,float dy)
+	{
+		player.input(dx, dy);
+	}
+	
+	public void changeGameState(int inewstate)
+	{
+		if(inewstate==2)
+		{
+			gamestate=inewstate;
+			mainmenu.setVisible(false);
+			analogstick.setVisible(true);
+			world.generate(1590513);
+		}
+	}
+	
+	public void spawnEnemy(GOEnemy ienemy)
+	{
+		world.spawnEnemy(ienemy);
+	}
+	
+	public void onPointerUp(float px,float py)
+	{
+		py = screenheight-py;
+		guiroot.onPointerUp(px, py);
+	}
+	
+	public void onPointerMove(float ipointerpos[],int npointers)
+	{
+		for(int i=0;i<4;i++)
+		{
+			ipointerpos[i*2+1] = screenheight-ipointerpos[i*2+1];
+		}
+		guiroot.onPointerMove(ipointerpos,npointers);
+	}
+	
+	public void setRunning(boolean ibrunning)
+	{
+		brunning = ibrunning;
+	}
+	
+	@Override
+	public void run()
+	{
+		while(brunning)
+		{
+			player.step(30.0f/1000f);
+			world.step(30.0f/1000f);
+			glsview.requestRender();
+			try
+			{
+				sleep(30);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void onDrawFrame()
+	{
+		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
+		
+		// Perspective
+		glrenderer.setViewProjection(viewproj);
+		float tpos[] = {0,0,10};
+		glrenderer.setViewPos(tpos);
+		if(gamestate==2)
+		{
+			world.Render(glrenderer);
+			player.Render(glrenderer);
+		}
+		
+		// Ortho
+		glrenderer.setViewProjection(viewoproj);
+		tpos[0]=screenwidth/2f;
+		tpos[1]=screenheight/2f;
+		tpos[2]=0;
+		glrenderer.setViewPos(tpos);
+		// Render Gui
+		guiroot.render(glrenderer);
+	}
+	
+	public void buildPerspectiveProjection(float imat[],float fov,float aspect,float n,float f)
+	{
+	    float h = 1.0f/(float)Math.tan(fov*3.14159/360.0);
+	    float neg_depth = n-f;
+
+	    imat[0] = h / aspect;
+	    imat[1] = 0;
+	    imat[2] = 0;
+	    imat[3] = 0;
+
+	    imat[4] = 0;
+	    imat[5] = h;
+	    imat[6] = 0;
+	    imat[7] = 0;
+
+	    imat[8] = 0;
+	    imat[9] = 0;
+	    imat[10] = (f + n)/neg_depth;
+	    imat[11] = -1;
+
+	    imat[12] = 0;
+	    imat[13] = 0;
+	    imat[14] = 2.0f*(n*f)/neg_depth;
+	    imat[15] = 0;
+	}
+	
+	private void buildOrthographicProjection(float imatbuf[],float l, float r,float t,float b,float n,float f)
+	{
+	    imatbuf[0] = 2/(r-l);
+	    imatbuf[1] = 0;
+	    imatbuf[2] = 0;
+	    imatbuf[3] = -(r+l)/(r-l);
+
+	    imatbuf[4] = 0;
+	    imatbuf[5] = 2/(t-b);
+	    imatbuf[6] = 0;
+	    imatbuf[7] = -(t+b)/(t-b);
+
+	    imatbuf[8] = 0;
+	    imatbuf[9] = 0;
+	    imatbuf[10] = -2/(f-n);
+	    imatbuf[11] = -(f+n)/(f-n);
+
+	    imatbuf[12] = 0;
+	    imatbuf[13] = 0;
+	    imatbuf[14] = 0;
+	    imatbuf[15] = 1;
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent me)
+	{
+    	PointerCoords pcoords = new PointerCoords();
+		if(me.getActionMasked()==MotionEvent.ACTION_UP)
+		{
+			onPointerUp(me.getX(), me.getY());
+			v.performClick();
+			npointers = 0;
+		}
+		else if(me.getActionMasked()==MotionEvent.ACTION_MOVE)
+		{
+			int npoints = me.getPointerCount();
+			npointers=npoints;
+			for(int i=0;i<npoints&&i<4;i++)
+			{
+				me.getPointerCoords(i, pcoords);
+				pointerpos[i*2]=pcoords.x;
+				pointerpos[i*2+1]=pcoords.y;
+				onPointerMove(pointerpos,npointers);
+			}
+		}
+		return true;
+	}
+}
